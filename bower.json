@@ -2,7 +2,8 @@
     "name": "Array.nocomplex",
     "version": "0.0.5",
     "main": [
-        "app"
+        "app",
+        "app/Array.nocomplex"
     ],
     "licenses": [
         {
