@@ -412,18 +412,425 @@ var requirejs, require, define;
 
 define("bower_components/almond/almond", function(){});
 
+define( 'Array.nocomplex/collect',[],function() {
+
+    Array.prototype.collect = function( f ) {
+        var res = [];
+        if ( typeof( f ) === "string" ) {
+            for ( var i = -1, n = this.length; ++i < n; ) {
+                res.push( this[ i ][ f ] );
+            }
+        } else {
+            for ( var i = -1, n = this.length; ++i < n; ) {
+                res.push( f( this[ i ] ) );
+            }
+        }
+        return res;
+    };
+
+} );
+define( 'Array.nocomplex/each',[],function() {
+
+    Array.prototype.each = function( f ) {
+        for ( var i = 0, n = this.length; i < n; i++ ) {
+            f( this[ i ], i );
+        }
+        return this;
+    };
+
+} );
+define( 'Array.nocomplex/first',[],function() {
+
+    Array.prototype.first = function( f ) {
+        for ( var i = 0, n = this.length; i < n; i++ ) {
+            if ( f( this[ i ] ) ) return this[ i ];
+        }
+        return null;
+    };
+
+} );
+define( 'Array.nocomplex/has',[],function() {
+
+    Array.prototype.has = function( value ) {
+        for ( var i = this.length; i--; ) {
+            if ( this[ i ] === value ) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+} );
+define( 'Array.nocomplex/last',[],function() {
+
+    Array.prototype.last = function() {
+        return this[ this.length - 1 ];
+    };
+
+} );
+define( 'Array.nocomplex/map',[],function() {
+
+
+    Array.prototype.map = Array.prototype.map || function( fn, scope ) {
+        if ( scope ) fn = fn.bind( scope );
+        var r = this.slice();
+        if ( typeof( fn ) === 'function' ) {
+            for ( var i = 0, n = r.length; i < n; i++ ) r[ i ] = fn( r[ i ], i );
+        } else {
+            fn = fn.substr( 2, fn.length );
+            for ( var i = 0, n = r.length; i < n; i++ ) r[ i ] = r[ i ][ fn ]();
+        }
+        return r;
+    };
+
+
+} );
+define( 'Array.nocomplex/onEls',[],function() {
+
+    Array.prototype.onEls = function( f ) {
+        for ( var i = this.length; i--; ) this[ i ] = f( this[ i ], i );
+        return this;
+    };
+
+} );
+define( 'Array.nocomplex/remove',[],function() {
+
+    Array.prototype.remove = function( v ) {
+        for ( var i = this.length; i--; ) {
+            if ( this[ i ] === v ) this.splice( i, 1 );
+        }
+        return this;
+    };
+
+} );
+define( 'Array.nocomplex/removeOneValue',[],function() {
+
+    Array.prototype.removeOneValue = function( v ) {
+        for ( var i = this.length; i--; ) {
+            if ( this[ i ] === v ) {
+                return ( this.splice( i, 1 ) );
+            }
+        }
+    };
+
+} );
+define( 'Array.nocomplex/except',[],function() {
+
+    Array.prototype.except = function( v ) {
+        var res = [];
+        for ( var i = 0, n = this.length; i < n; i++ )
+            if ( this[ i ] !== v ) res.push( this[ i ] )
+        return res;
+    }
+
+} );
+define( 'Array.nocomplex/exceptFn',[],function() {
+
+    Array.prototype.exceptFn = function( f ) {
+        var r = this.slice();
+        for ( var i = r.length; i--; )
+            if ( f( r[ i ] ) ) r.splice( i, 1 );
+        return r;
+    }
+
+} );
+define( 'Array.nocomplex/indexOf',[],function() {
+
+
+    Array.prototype.indexOf = Array.prototype.indexOf || function( s ) {
+        var i, l
+        for ( i = 0, l = this.length; i < l; i++ )
+            if ( this[ i ] === s )
+                return i
+        return -1
+    };
+
+} );
+define( 'Array.nocomplex/isIn',[ './has' ], function() {
+
+
+    Array.prototype.isIn = function( array ) {
+        for ( var i = this.length; i--; ) {
+            if ( !array.has( this[ i ] ) ) return false;
+        }
+        return true;
+    }
+
+} );
+define( 'Array.nocomplex/send',[],function() {
+
+    Array.prototype.send = function( method ) {
+        var args = Array.prototype.slice.call( arguments );
+        args.splice( 0, 1 );
+        if ( typeof( method ) === 'string' ) {
+            for ( var i = -1, n = this.length; ++i < n; ) {
+                if ( this[ i ] )
+                    this[ i ][ method ].apply( this[ i ], args );
+            }
+        } else
+            for ( var i = -1, n = this.length; ++i < n; ) method.apply( {}, [ this[ i ] ].concat( args ) );
+        return this;
+    };
+
+} );
+define( 'Array.nocomplex/uniq',[ './has' ], function() {
+
+    Array.prototype.uniq = function( f ) {
+        if ( !f ) {
+            var res = []
+            for ( var i = this.length; i--; ) {
+                !res.has( this[ i ] ) && res.push( this[ i ] );
+            }
+            return res;
+        } else {
+            var res = [],
+                _r = [];
+            for ( var i = 0, n = this.length; i < n; i++ ) {
+                var v = f( this[ i ] );
+                if ( !_r.has( v ) ) {
+                    res.push( this[ i ] )
+                    _r.push( v );
+                }
+            }
+            return res;
+        }
+    }
+
+} );
+define( 'Array.nocomplex/equals',[ './isIn' ], function() {
+
+    Array.prototype.equals = function( array ) {
+        if ( this.isIn( array ) && array.isIn( this ) ) {
+            return true;
+        }
+        return false;
+    };
+
+
+} );
+define( 'Array.nocomplex/find',[],function() {
+
+  Array.prototype.find = function( f ) {
+    for ( var i = 0, n = this.length; i < n; i++ ) {
+      if ( f( this[ i ], i ) ) return this[ i ];
+    }
+    return false;
+  };
+
+  Array.prototype.findReverse = function( f ) {
+    for ( var i = this.length; i--; ) {
+      if ( f( this[ i ], i ) ) return this[ i ];
+    }
+    return false;
+  };
+
+} );
+define( 'Array.nocomplex/where',[],function() {
+
+    Array.prototype.where = function( f ) {
+        var res = [];
+        for ( var i = 0, n = this.length; i < n; i++ ) {
+            if ( f( this[ i ] ) ) res.push( this[ i ] );
+        }
+        return res;
+    }
+
+} );
+define( 'Array.nocomplex/findIndexOf',[],function() {
+
+    Array.prototype.findIndexOf = function( f ) {
+        for ( var i = 0, n = this.length; i < n; i++ ) {
+            if ( f( this[ i ], i ) ) return i;
+        }
+        return false;
+    };
+
+
+} );
+define( 'Array.nocomplex/findByKey',[],function() {
+
+    Array.prototype.findByKey = function( key, value ) {
+        for ( var i = 0, n = this.length; i < n; i++ ) {
+            if ( this[ i ][ key ] === value ) return this[ i ];
+        }
+        return false;
+    };
+
+} );
+define( 'Array.nocomplex/basics',[
+	'./collect',
+	'./each',
+	'./first',
+	'./has',
+	'./last',
+	'./map',
+	'./onEls',
+	'./remove',
+	'./removeOneValue',
+	'./remove',
+	'./except',
+	'./exceptFn',
+	'./indexOf',
+	'./isIn',
+	'./send',
+	'./uniq',
+	'./equals',
+	'./find',
+	'./where',
+	'./findIndexOf',
+	'./findByKey'
+ ], function(){ return Array.prototype });
+define( 'Array.nocomplex/math/all',[],function() {
+
+    var methods = {
+
+        equals: function( a ) {
+            for ( var i = this.length; i--; )
+                if ( a[ i ] !== this[ i ] ) return false;
+            return true;
+        },
+
+        multiply: function( a ) {
+            var ret = [];
+            if ( typeof( a ) === 'number' ) {
+                for ( var i = this.length; i--; ) {
+                    ret[ i ] = this[ i ] * a;
+                }
+            } else {
+                for ( var i = this.length; i--; ) {
+                    ret[ i ] = this[ i ] * a[ i ];
+                }
+            }
+            return ( ret );
+        },
+
+        divide: function( a ) {
+            var ret = [];
+            if ( typeof( a ) === 'number' ) {
+                for ( var i = this.length; i--; ) {
+                    ret[ i ] = this[ i ] / a;
+                }
+            } else {
+                for ( var i = this.length; i--; ) {
+                    ret[ i ] = this[ i ] / a[ i ];
+                }
+            }
+            return ( ret );
+        },
+
+        min: function( f ) {
+            var r = f ? this.map( f ) : this
+            return Math.min.apply( null, r )
+        },
+
+        minMax: function( f ) {
+            return [ this.min( f ), this.max( f ) ]
+        },
+
+        max: function( f ) {
+            var r = f ? this.map( f ) : this
+            return Math.max.apply( null, r )
+        },
+
+        average: function() {
+            var ave = 0;
+            for ( var i = this.length; i--; ) {
+                ave += this[ i ]
+            }
+            return ave / this.length
+        },
+
+        minus: function( a ) {
+            var ret = [];
+            if ( typeof( a ) === 'number' ) {
+                for ( var i = this.length; i--; ) {
+                    ret[ i ] = this[ i ] - a;
+                }
+            } else {
+                for ( var i = this.length; i--; ) {
+                    ret[ i ] = this[ i ] - a[ i ];
+                }
+            }
+            return ( ret );
+        },
+
+        domain: function( bounds, range ) {
+            var min = range && typeof range[ 0 ] === "number" ? range[ 0 ] : this.min(),
+                max = range && typeof range[ 1 ] === "number" ? range[ 1 ] : this.max(),
+                a, b;
+            if ( min === max ) { // if all data are equal, return range[ 0 ]
+                return this.map( function() { 
+                    return bounds[ 0 ]
+                } )
+            }
+            a = ( bounds[ 1 ] - bounds[ 0 ] ) / ( max - min );
+            b = ( bounds[ 0 ] * max - bounds[ 1 ] * min ) / ( max - min )
+            return this.multiply( a ).add( b )
+        },
+
+        add: function( a ) {
+            var ret = [];
+            if ( typeof( a ) === 'number' ) {
+                for ( var i = this.length; i--; ) {
+                    ret[ i ] = this[ i ] + a;
+                }
+            } else {
+                for ( var i = this.length; i--; ) {
+                    ret[ i ] = this[ i ] + a[ i ];
+                }
+            }
+            return ( ret );
+        },
+
+        round: function() {
+            for ( var i = this.length; i--; ) {
+                this[ i ] = Math.round( this[ i ] );
+            }
+            return ( this );
+        },
+
+        sum: function( f ) {
+            var r = 0
+            for ( var i = this.length; i--; ) {
+                r += f( i )
+            }
+            return r
+        },
+
+        orth: function() {
+            if ( this.length != 2 ) {
+                throw Error;
+            }
+            return [ -this[ 1 ], this[ 0 ] ];
+        },
+
+        norm: function() {
+            return Math.sqrt( this.sum( function( i ) {
+                return i * i
+            } ) );
+        }
+
+    };
+
+    for ( var method in methods )
+        if ( methods.hasOwnProperty( method ) )
+            Array.prototype[  method ] = methods[ method ]
+
+
+    return Array.prototype
+    
+} );
 /**
- * Array.nocomplex version: "0.0.3" Copyright (c) 2011-2012, Cyril Agosta ( cyril.agosta@gmail.com) All Rights Reserved.
+ * Array.nocomplex version: "0.0.4" Copyright (c) 2011-2012, Cyril Agosta ( cyril.agosta@gmail.com) All Rights Reserved.
  * Available via the MIT license.
  * see: http://github.com/cagosta/Array.nocomplex for details
  */
 
-define( 'Array.nocomplex/Array.nocomplex',[],function() {
-
-    return {
-        iAmArrayNocomplex: true
-    }
-
+define( 'Array.nocomplex/Array.nocomplex',[
+    './basics',
+    './math/all'
+ ], function() {
+    return Array.prototype 
 } );
 var EngineDetector = function() {
     this.isNode = false
