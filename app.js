@@ -1,5 +1,5 @@
 define( [
-    './Array.nocomplex'
+    'Array.nocomplex/Array.nocomplex'
  ], function( Arraynocomplex ) {
 
     return Arraynocomplex

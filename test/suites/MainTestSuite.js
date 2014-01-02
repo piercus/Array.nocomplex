@@ -1,6 +1,6 @@
 define( [
     'Array.nocomplex/Array.nocomplex'
- ], function( ArrayNocomplex ) {
+ ], function( ArrayNocomplex  ) {
 
     describe( 'Array.nocomplex/Array.nocomplex', function() {
 
@@ -9,6 +9,7 @@ define( [
             expect( ArrayNocomplex ).to.exist
 
         } )
+
 
         it( 'should return Array.prototype', function() {
 
