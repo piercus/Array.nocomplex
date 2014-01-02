@@ -19,7 +19,6 @@ define( [
 
         it( 'should have define Array.prototype methods', function() {
 
-
             expect( Array.prototype.map ).to.exist
             expect( Array.prototype.equals ).to.exist
             expect( [ '2', '2' ].equals( [ '2', '2' ] ) ).to.be.true

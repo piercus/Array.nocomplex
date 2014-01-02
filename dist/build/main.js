@@ -821,7 +821,7 @@ define( 'Array.nocomplex/math/all',[],function() {
     
 } );
 /**
- * Array.nocomplex version: "0.0.8" Copyright (c) 2011-2012, Cyril Agosta ( cyril.agosta@gmail.com) All Rights Reserved.
+ * Array.nocomplex version: "0.0.9" Copyright (c) 2011-2012, Cyril Agosta ( cyril.agosta@gmail.com) All Rights Reserved.
  * Available via the MIT license.
  * see: http://github.com/cagosta/Array.nocomplex for details
  */
