@@ -4,7 +4,9 @@
 
 ## Introduction ##
 
-Array.prototype augmentations, without complex.  
+Array.prototype augmentations, no complex.  
+
+
 I know this is bad but _( _( _( this ).is ).ugly() while this.is.clean().
 Furthemore, I promise to modify all .prototype invocations on modules that are becoming popular.  
 
