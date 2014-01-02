@@ -4,7 +4,96 @@
 
 ## Introduction ##
 
+Array.prototype augmentations, without complex.  
+I know this is bad but _( _( _( this ).is ).ugly() while this.is.clean().
+Furthemore, I promise to modify all .prototype invocations on modules that are becoming popular.  
 
+
+## Array.prototype ###
+
+All helpers are atomised in AMD modules. You can use it for instance with require.js or almond.js.  
+
+You can require juste one, such as map ( `define('myModule', ['Array.nocomplex/map']);` ) or group exists, such as `Array/basics`, `Array/math` or `Array.nocomplex/all`
+
+### Basics
+
+Array/basics provide the following :
+* map
+* collect 
+* first
+* has
+* last
+* onEls
+* remove
+* removeOneValue
+* except
+* exceptFn
+* uniq
+* equals
+
+#### map
+```javascript
+    [10,20].map(function(n) { return n * 2 }); // [20, 40]
+```
+
+#### collect 
+Such as map, but provide a useful tricks :
+```javascript
+    [{ name : 'cyril'}, { name : 'piercus'}].collect('name') // ['cyril', 'piercus']
+```
+
+#### send
+Useful, allow you to call a method on each element of the array
+```javascript
+[{ callMe : function(arg) { console.log(arg)}}, { callMe : function() { console.log('world')}}].send('callMe', 'hello'); // log 'hello' and then 'world'
+```
+ 
+#### where
+Return a new array with all found occurences
+
+#### find
+Return the first found occurence wich evaluate to true
+
+#### first 
+Return array[0]
+
+#### has
+Return true if instance has value 
+```javascript
+['cyril', 'piercus'].has('cyril'); // true
+```
+
+#### onEls
+Replaces every element of this with f(element)
+
+#### remove
+If found, the argument is removed from the array
+
+#### last
+Return the last element of the array
+
+#### except
+Return a new array without the element that are the same at the argument
+
+#### isIn
+
+#### equals
+
+#### each
+
+### Math
+
+Useful helpers when dealing with geometry.
+
+`Array/math` provide the following : 
+
+* equals
+* multiply
+* divide
+* minus
+* add 
+* round
+* norm
 
 ## Install ##
 
@@ -72,7 +161,7 @@ See jsdoc-generated documentation in /documentation
     documentation  -> [jsdoc](http://usejsdoc.org/about-jsdoc3.html) generated documentation 
 
 
-## Running unit tests ##
+## Run unit tests ##
 
 #### On the browser ####
 
@@ -89,6 +178,11 @@ Run `grunt test:browser` and open `test/` on your browser.
 Because of requirejs, the `mocha` command does not work.
 
 
+## To do ## 
+- check future default implementations  
+- base all naming on lodash  
+
+
 ## Build your own ##
 
 This project uses [Node.js](http://nodejs.org/), [Grunt](http://gruntjs.com/) and [Require.js](http://requirejs.org/docs/optimization.html) for the build process. If for some reason you need to build a custom version install Node.js, `npm install` and run:
@@ -103,4 +197,11 @@ Check it for task-related references such as build, deploy etc ..
 ## License ##
 
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
+
+
+### Authors 
+* [Cyril Agosta](https://github.com/cagosta)
+* [Sam Ton That](https://github.com/KspR)
+* [Pierre Cole](https://github.com/piercus)
+
 
