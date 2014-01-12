@@ -97,6 +97,9 @@ Useful helpers when dealing with geometry.
 * round
 * norm
 
+## Demo ##
+See [cagosta.github.io/Array.nocomplex](http://cagosta.github.io/Array.nocomplex) 
+
 ## Install ##
 
 Array.nocomplex is coded as [amd module](http://requirejs.org/docs/whyamd.html) but can be installed with npm, bower or old-fashioned src=".min.js".
